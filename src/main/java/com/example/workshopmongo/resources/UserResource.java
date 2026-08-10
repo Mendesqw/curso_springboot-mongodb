@@ -3,10 +3,12 @@ package com.example.workshopmongo.resources;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.workshopmongo.UserDTO.UserDTO;
 import com.example.workshopmongo.domain.User;
 import com.example.workshopmongo.services.UserService;
 
@@ -22,10 +24,11 @@ public class UserResource {
     private UserService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findall() {
+    public ResponseEntity<List<UserDTO>> findall() {
 
         List<User> list = service.findAll();
-        return ResponseEntity.ok().body(list);
+        List<UserDTO> listDTO = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDTO);
 
     }
 
