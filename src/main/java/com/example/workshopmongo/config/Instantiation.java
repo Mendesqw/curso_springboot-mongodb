@@ -2,7 +2,6 @@ package com.example.workshopmongo.config;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.example.workshopmongo.domain.Post;
 import com.example.workshopmongo.domain.User;
+import com.example.workshopmongo.dto.AuthorDTO;
 import com.example.workshopmongo.repository.PostRepository;
 import com.example.workshopmongo.repository.UserRepository;
 
@@ -34,10 +34,12 @@ public class Instantiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        Post post1 = new Post(null, "Partiu viagem", "Vou viajar amanhã", sdf.parse("21/03/2018"), maria);
+        userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
+        Post post1 = new Post(null, "Partiu viagem", "Vou viajar amanhã", sdf.parse("21/03/2018"), new AuthorDTO(maria));
 
         postRepository.saveAll(Arrays.asList(post1));
-        userRepository.saveAll(Arrays.asList(maria, alex, bob));
+        
     }
 
 }
